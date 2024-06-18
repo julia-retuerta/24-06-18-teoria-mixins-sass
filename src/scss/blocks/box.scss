@@ -1,0 +1,129 @@
+/* .box{
+    width: 200px;
+    height: 200px;
+    background-color: orange;
+
+    @media (hover: hover) {
+        &:hover {
+             background-color: aqua;
+            }
+          }
+} */
+
+/* Sin mixins */
+
+/* @media (hover: hover) {
+.box:hover {
+     background-color: aqua;
+    }
+  } */
+
+@use '../mixins/hover.scss' as *;
+@use '../mixins/pseudo.scss' as *;
+@use '../mixins/responsive.scss' as *;
+
+/* Esto es para evitar el glitch de la animación: se crea un contenedor y se aplica el cambio a este contenedor para que siempre se está haciendo hover sobre él, no sobre el elemento que contiene */
+
+/* .box-container {
+  width: 200px;
+  height: 200px;
+  @include hover {
+    .box {
+      translate: -100px;
+    }
+  }
+}
+
+.box {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background-color: orange;
+  transition: translate 0.3s;
+
+  &::after {
+    @include pseudo(100px, 100px) {
+      top: 200px;
+      left: 200px;
+      background-color: red;
+    }
+  }
+
+  @include responsive(desktop) {
+    width: 500px;
+  }
+} */
+
+/*  @include hover {
+    background-color: aqua;
+    translate: 100px 100px;
+  } */
+
+/* si se borran los paréntesis con las medidas @include pseudo(100px, 100px), coge la posición de su padre */
+/* en responsive se puede poner una medida concreta en px en vez de poner desktop */
+
+/* 
+    ORDEN DE PROPIEDADES EN CSS
+
+    position / top / left...
+    display
+    box-model / width / heigth / border / padding / margin
+    color
+    el resto
+
+*/
+
+/* 
+
+    ANIMACIONES - TRANSITION
+
+    Fase layout
+    Fase de pintado
+    Fase de composite
+
+    Nunca hay que escribir transition: all porque consume muchos recursos. Hay que poner solo la propiedad que se va a animar.
+
+    Nunca se animan propiedades como top, left, bottom, rigth...
+
+    MOVIMIENTO Y ESCALAS se hace con TRANSLATE, ROTATE Y SCALE
+    MOSTRAR Y OCULTAR se hace con OPACITY
+
+    Las propiedades que se pueden animar son las que tienen valores numéricos, excepto z-index.
+
+    Translate solo se pone en la clase, no en el hover
+
+*/
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: repeat(2, 200px);
+  gap: 1rem;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: orange;
+  color: #333;
+  font-size: 3rem;
+}
+
+.box-1 {
+  grid-column: 2 / 4;
+}
+
+.box-2 {
+  grid-row: 1 / 3;
+}
+
+/* 
+
+    GRID
+
+    Modelo de layout bidimensional. Se utiliza para estructuras grandes.
+    Flex, en cambio, es un modelo de layout unidimensional. Se utiliza para estructuras pequeñas.
+    grid-column solo funciona si el elemento no tiene width ni heigth.
+
+*/
